@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <Name Value="oauth2_laz"/>
+    <Type Value="RunAndDesignTime"/>
+    <Author Value="Tony Whyman"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="src"/>
+        <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <License Value="
+    This file is part of this MWA Software OAuth2 Client.
+
+    The MWA Software OAuth2 Client is free software: you can redistribute it
+    and/or modify it under the terms of the GNU Lesser General Public License as
+    published by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    The MWA Software OAuth2 Client is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with the MWA Software OAuth2 Client.  If not, see https://www.gnu.org/licenses/.
+
+"/>
+    <Version Major="1" Minor="0" Release = "0" Build="12767" />
+    <Files Count="3">
+      <Item1>
+        <Filename Value="src/oauth2Client.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="oauth2Client"/>
+      </Item1>
+      <Item2>
+        <Filename Value="src/oauth2errors.pas"/>
+        <UnitName Value="oauth2errors"/>
+      </Item2>
+      <Item3>
+        <Filename Value="src/oauth2tokens.pas"/>
+        <UnitName Value="oauth2tokens"/>
+      </Item3>
+    </Files>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="languages"/>
+    </i18n>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="indylaz"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <UseFileFilters Value="True"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

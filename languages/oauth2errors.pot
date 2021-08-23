@@ -1,0 +1,62 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: oauth2errors.sauthtimeout
+msgid "Authorization Grant Timeout"
+msgstr ""
+
+#: oauth2errors.sbadaccesstokentype
+#, object-pascal-format
+msgid "Unexpected Access Token Type - expected %s found %s"
+msgstr ""
+
+#: oauth2errors.screateguidfailed
+msgid "Create GUID Failed"
+msgstr ""
+
+#: oauth2errors.sinvalidpropertytype
+#, object-pascal-format
+msgid "Unsupported property type or value for property %s - value = \"%s\""
+msgstr ""
+
+#: oauth2errors.smissingaccesstoken
+msgid "Access Token not present in response"
+msgstr ""
+
+#: oauth2errors.smissingauthcode
+msgid "No Authorisation Code contained in response to authorisation code request"
+msgstr ""
+
+#: oauth2errors.snotmainthread
+msgid "Method must be called from the main thread only"
+msgstr ""
+
+#: oauth2errors.soauth2clientnotidle
+msgid "OAuth2 Client is not idle"
+msgstr ""
+
+#: oauth2errors.soauth2responseerror
+#, object-pascal-format
+msgid "Status Code %d %s - OAuth2 Error (%s) %s"
+msgstr ""
+
+#: oauth2errors.soautherrormessage
+#, object-pascal-format
+msgid "Authorisation Code Request Error - %s - %s"
+msgstr ""
+
+#: oauth2errors.sopenurlfailed
+#, object-pascal-format
+msgid "Call to OpenURL Failed for %s"
+msgstr ""
+
+#: oauth2errors.south2otherexception
+#, object-pascal-format
+msgid "Status Code %d - Unknown OAuth2 Error"
+msgstr ""
+
+#: oauth2errors.sunexpectedstate
+#, object-pascal-format
+msgid "Unexpected State Parameter - attempt at forgery? Expected \"%s\", received \"%s\""
+msgstr ""
+

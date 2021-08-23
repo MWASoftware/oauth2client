@@ -1,0 +1,19 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: oauth2client.snojavascriptsupport
+msgid "Implicit Authorization Failed. Please enable Javascript."
+msgstr ""
+
+#: oauth2client.soauth2accessauthorized
+msgid "Access Authorized"
+msgstr ""
+
+#: oauth2client.soauth2accessfailed
+msgid "Access Authorization Request Failed"
+msgstr ""
+
+#: oauth2client.soauth2requestignored
+msgid "Authorization Code Request Ignored"
+msgstr ""
+

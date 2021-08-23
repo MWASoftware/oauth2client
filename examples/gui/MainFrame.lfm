@@ -1,0 +1,179 @@
+object Form1: TForm1
+  Left = 676
+  Height = 425
+  Top = 182
+  Width = 856
+  Caption = 'Oauth 2 Test'
+  ClientHeight = 425
+  ClientWidth = 856
+  DefaultMonitor = dmPrimary
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '2.2.0.2'
+  object Memo1: TMemo
+    Left = 16
+    Height = 338
+    Top = 8
+    Width = 671
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Lines.Strings = (
+      'Memo1'
+    )
+    ScrollBars = ssAutoVertical
+    TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 16
+    Height = 25
+    Top = 352
+    Width = 160
+    Caption = 'Get Client Credentials'
+    OnClick = Button1Click
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 184
+    Height = 25
+    Top = 352
+    Width = 168
+    Caption = 'Get Authorization'
+    OnClick = Button2Click
+    TabOrder = 2
+  end
+  object RefreshBtn: TButton
+    Left = 368
+    Height = 25
+    Top = 352
+    Width = 144
+    Caption = 'Refresh Access Token'
+    Enabled = False
+    OnClick = RefreshBtnClick
+    TabOrder = 3
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 696
+    Height = 50
+    Top = 200
+    Width = 141
+    AutoFill = True
+    Caption = 'Client Authentication'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 34
+    ClientWidth = 139
+    ItemIndex = 1
+    Items.Strings = (
+      'Basic'
+      'Inline'
+    )
+    OnClick = RadioGroup1Click
+    TabOrder = 4
+  end
+  object Button3: TButton
+    Left = 520
+    Height = 25
+    Top = 352
+    Width = 168
+    Caption = 'User Password Grant'
+    OnClick = Button3Click
+    TabOrder = 5
+  end
+  object ScopeSelection: TRadioGroup
+    Left = 699
+    Height = 61
+    Top = 283
+    Width = 141
+    AutoFill = True
+    Caption = 'Scope'
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 45
+    ClientWidth = 139
+    ItemIndex = 0
+    Items.Strings = (
+      'testing'
+      'bad'
+    )
+    TabOrder = 6
+  end
+  object Button4: TButton
+    Left = 699
+    Height = 25
+    Top = 352
+    Width = 125
+    Caption = 'Implicit Grant'
+    OnClick = Button4Click
+    TabOrder = 7
+  end
+  object CancelBtn: TButton
+    Left = 320
+    Height = 25
+    Top = 384
+    Width = 75
+    Caption = 'Cancel'
+    Enabled = False
+    OnClick = CancelBtnClick
+    TabOrder = 8
+  end
+  object ResourceBtn: TButton
+    Left = 699
+    Height = 25
+    Top = 384
+    Width = 123
+    Caption = 'Access Resource'
+    OnClick = ResourceBtnClick
+    TabOrder = 9
+  end
+  object OAuth2Client: TOAuth2Client
+    ClientID = 'OAuth2Tester'
+    ClientSecret = 'masterkey'
+    AuthEndPoint = 'http://localhost/oauth2/authorise.php'
+    TokenEndPoint = 'http://localhost/oauth2/token.php'
+    ClientAuthType = caInline
+    RedirectURI = 'http://localhost:8080'
+    PortNo = 8080
+    OnAccessToken = OAuth2ClientAccessToken
+    OnErrorResponse = OAuth2ClientErrorResponse
+    Left = 80
+    Top = 272
+  end
+  object httpClient: TIdHTTP
+    ProxyParams.BasicAuthentication = False
+    ProxyParams.ProxyPort = 0
+    Request.ContentLength = -1
+    Request.ContentRangeEnd = -1
+    Request.ContentRangeStart = -1
+    Request.ContentRangeInstanceLength = -1
+    Request.ContentType = 'application/x-www-form-urlencoded'
+    Request.Accept = 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+    Request.BasicAuthentication = False
+    Request.UserAgent = 'Mozilla/3.0 (compatible; Indy Library)'
+    Request.Ranges.Units = 'bytes'
+    Request.Ranges = <>
+    HTTPOptions = [hoForceEncodeParams, hoNoProtocolErrorException, hoWantProtocolErrorContent]
+    Left = 192
+    Top = 272
+  end
+  object SSLHandler: TIdSSLIOHandlerSocketOpenSSL
+    MaxLineAction = maException
+    Port = 0
+    DefaultPort = 0
+    SSLOptions.Method = sslvTLSv1_2
+    SSLOptions.SSLVersions = [sslvTLSv1_2]
+    SSLOptions.Mode = sslmClient
+    SSLOptions.VerifyMode = []
+    SSLOptions.VerifyDepth = 0
+    Left = 288
+    Top = 272
+  end
+end
