@@ -60,3 +60,7 @@ backup/
 
 # Castalia statistics file
 *.stat
+
+#Local restrictions
+*.odt
+update-revision.sh
