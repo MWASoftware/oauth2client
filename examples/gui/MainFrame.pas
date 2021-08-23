@@ -255,7 +255,7 @@ begin
 end;
 
 procedure TForm1.ResourceBtnClick(Sender: TObject);
-var Request: TURLEncodedData;
+var Request: TOAuth2URLEncodedData;
     Response: TStringStream;
     ResouceResponse: TResouceResponse;
 begin
@@ -267,7 +267,7 @@ begin
       httpClient.IOHandler := SSlHandler;
     httpClient.ConnectTimeout := 5000;
     httpClient.ReadTimeout := 5000;
-    Request := TURLEncodedData.Create;
+    Request := TOAuth2URLEncodedData.Create;
     Response := TStringStream.Create('');
     try
       Request.AddParam('access_token',FAccessToken);

@@ -37,23 +37,18 @@ interface
 uses Classes, Sysutils, IdHTTPServer, IdGlobal, IdContext,IdHeaderList,
   IdCustomHTTPServer, SyncObjs, oauth2tokens, oauth2errors;
 
-const
-  {Response Content Type}
-  rcAccept = 'application/vnd.hmrc.1.0+json';
 
 type
-
-
-  TBrowserResponseType = (rtSuccess,rtError,rtIgnored,rtRedirect);
-  TOnGetBrowserResponseBody = procedure(Sender: TObject; ResponseType: TBrowserResponseType; Contents: TMemoryStream) of object;
-  TOnErrorResponse = procedure(Sender: TObject; E: Exception) of object;
-  TOnAccessTokenExt = procedure(Sender: TObject; Response: TTokenResponse) of object;
-  TOnAccessToken = procedure(Sender: TObject; AccessToken, RefreshToken, TokenScope: string;
+  TOAuth2BrowserResponseType = (rtSuccess,rtError,rtIgnored,rtRedirect);
+  TOAuth2OnGetBrowserResponseBody = procedure(Sender: TObject; ResponseType: TOAuth2BrowserResponseType; Contents: TMemoryStream) of object;
+  TOAuth2OnErrorResponse = procedure(Sender: TObject; E: Exception) of object;
+  TOAuth2OnAccessTokenExt = procedure(Sender: TObject; Response: TOAuth2TokenResponse) of object;
+  TOAuth2OnAccessToken = procedure(Sender: TObject; AccessToken, RefreshToken, TokenScope: string;
     expires_in: integer) of object;
 
-  TAuthGrantState = (agIdle,agWaitAuthCode,agWaitRedirect,agWaitAccessCode,agWaitSessionEnd);
+  TOAuth2AuthGrantState = (agIdle,agWaitAuthCode,agWaitRedirect,agWaitAccessCode,agWaitSessionEnd);
 
-  TClientAuthType = (caBasic,caInline);
+  TOAuth2ClientAuthType = (caBasic,caInline);
 
 
   { TOAuth2Client }
@@ -65,12 +60,12 @@ type
 
     TResponseHandler = class
     protected
-      FResponse: TTokenResponse;
+      FResponse: TOAuth2TokenResponse;
     public
       procedure AccessTokenReceived; virtual; abstract;
       procedure ErrorResponseReceived(E: Exception); virtual; abstract;
       procedure GrantCompleted; virtual; abstract;
-      property Response: TTokenResponse read FResponse;
+      property Response: TOAuth2TokenResponse read FResponse;
     end;
 
     { TAsyncResponseHandler }
@@ -82,7 +77,7 @@ type
       procedure DoOnAccessToken;
       procedure DoOnErrorResponse;
     public
-      constructor Create(aOwner: TOAuth2Client; ResponseClass: TTokenResponseClass);
+      constructor Create(aOwner: TOAuth2Client; ResponseClass: TOAuth2TokenResponseClass);
       destructor Destroy; override;
       procedure AccessTokenReceived; override;
       procedure ErrorResponseReceived(E: Exception); override;
@@ -98,7 +93,7 @@ type
       FErrorData: TOAuth2ErrorData;
       FUserEventObject: TEventObject;
     public
-      constructor Create(aOwner: TOAuth2Client; aResponse: TTokenResponse);
+      constructor Create(aOwner: TOAuth2Client; aResponse: TOAuth2TokenResponse);
       destructor Destroy; override;
       procedure AccessTokenReceived; override;
       procedure ErrorResponseReceived(E: Exception); override;
@@ -119,18 +114,18 @@ type
 
   private
     FAuthEndPoint: string;
-    FClientAuthType: TClientAuthType;
+    FClientAuthType: TOAuth2ClientAuthType;
     FClientID: string;
     FClientSecret: string;
-    FOnAccessToken: TOnAccessToken;
-    FOnAccessTokenExt: TOnAccessTokenExt;
-    FOnErrorResponse: TOnErrorResponse;
-    FOnGetBrowserResponseBody: TOnGetBrowserResponseBody;
+    FOnAccessToken: TOAuth2OnAccessToken;
+    FOnAccessTokenExt: TOAuth2OnAccessTokenExt;
+    FOnErrorResponse: TOAuth2OnErrorResponse;
+    FOnGetBrowserResponseBody: TOAuth2OnGetBrowserResponseBody;
     FRedirectURI: string;
     FTokenEndPoint: string;
     FServer: TIdHTTPServer;
     FState: string;
-    FAuthGrantState: TAuthGrantState;
+    FAuthGrantState: TOAuth2AuthGrantState;
     FSettingPort: boolean;
     FResponseHandler: TResponseHandler;
     procedure CheckMainThread;
@@ -141,7 +136,7 @@ type
     procedure HandleDisconnect(AContext: TIdContext);
     procedure InternalGrantAuthorizationCode(Scope: string);
     procedure InternalImplicitGrant(Scope: string);
-    procedure GetAccessTokenFromAuthCode(AuthCode: string; Response: TTokenResponse);
+    procedure GetAccessTokenFromAuthCode(AuthCode: string; Response: TOAuth2TokenResponse);
     function Post(URL: string; Params: TStrings; Response: TOAuth2Response): integer;
     procedure ResetServer;
     procedure setRedirectURI(AValue: string);
@@ -152,55 +147,55 @@ type
     destructor Destroy; override;
     procedure GrantClientCredentials(Scope: string;
       var AccessToken: string; var TokenScope: string; var expires_in: integer); overload;
-    procedure GrantClientCredentials(Scope: string; Response: TTokenResponse); overload;
+    procedure GrantClientCredentials(Scope: string; Response: TOAuth2TokenResponse); overload;
     procedure GrantUserPasswordCredentials(Scope: string;
       UserName, Password: string; var AccessToken: string; var RefreshToken: string;
       var TokenScope: string; var expires_in: integer); overload;
      procedure GrantUserPasswordCredentials(Scope: string;
       UserName, Password: string;
-      Response: TTokenResponse); overload;
-    procedure GrantAuthorizationCodeAsync(Scope: string; ResponseClass: TTokenResponseClass); overload;
+      Response: TOAuth2TokenResponse); overload;
+    procedure GrantAuthorizationCodeAsync(Scope: string; ResponseClass: TOAuth2TokenResponseClass); overload;
     procedure GrantAuthorizationCodeAsync(Scope: string); overload;
     procedure GrantAuthorizationCode(Scope: string; var AccessToken,
       RefreshToken: string; var TokenScope: string; var expires_in: integer; timeout: cardinal=INFINITE); overload;
-    procedure GrantAuthorizationCode(Scope: string; Response: TTokenResponse; timeout: cardinal=INFINITE); overload;
-    procedure ImplicitGrantAsync(Scope: string; ResponseClass: TTokenResponseClass); overload;
+    procedure GrantAuthorizationCode(Scope: string; Response: TOAuth2TokenResponse; timeout: cardinal=INFINITE); overload;
+    procedure ImplicitGrantAsync(Scope: string; ResponseClass: TOAuth2TokenResponseClass); overload;
     procedure ImplicitGrantAsync(Scope: string); overload;
     procedure ImplicitGrant(Scope: string;
       var AccessToken: string; var TokenScope: string; var expires_in: integer; timeout: cardinal=INFINITE); overload;
-    procedure ImplicitGrant(Scope: string;  Response: TTokenResponse; timeout: cardinal=INFINITE); overload;
+    procedure ImplicitGrant(Scope: string;  Response: TOAuth2TokenResponse; timeout: cardinal=INFINITE); overload;
     procedure CancelGrantRequest;
     procedure RefreshAccessToken(Scope, RefreshToken: string; var AccessToken: string;
       var TokenScope: string; var NewRefreshToken: string; var expires_in: integer); overload;
-    procedure RefreshAccessToken(Scope, RefreshToken: string; Response: TTokenResponse); overload;
+    procedure RefreshAccessToken(Scope, RefreshToken: string; Response: TOAuth2TokenResponse); overload;
     procedure ExtensionGrant(GrantType: string; aParams: TStrings;
-      Response: TTokenResponse);
+      Response: TOAuth2TokenResponse);
   published
     property ClientID: string read FClientID write FClientID;
     property ClientSecret: string read FClientSecret write FClientSecret;
     property AuthEndPoint: string read FAuthEndPoint write FAuthEndPoint;
     property TokenEndPoint: string read FTokenEndPoint write FTokenEndPoint;
-    property ClientAuthType: TClientAuthType read FClientAuthType write FClientAuthType; {Default to caInline}
+    property ClientAuthType: TOAuth2ClientAuthType read FClientAuthType write FClientAuthType; {Default to caInline}
     property RedirectURI: string read FRedirectURI write setRedirectURI;
     property PortNo: TIdPort read GetPortNo write SetPortNo; {Defaults to 8080}
-    property OnAccessTokenExt: TOnAccessTokenExt read FOnAccessTokenExt write FOnAccessTokenExt;
-    property OnAccessToken: TOnAccessToken read FOnAccessToken write FOnAccessToken;
-    property OnErrorResponse: TOnErrorResponse read FOnErrorResponse write FOnErrorResponse;
-    property OnGetBrowserResponseBody: TOnGetBrowserResponseBody read FOnGetBrowserResponseBody write FOnGetBrowserResponseBody;
+    property OnAccessTokenExt: TOAuth2OnAccessTokenExt read FOnAccessTokenExt write FOnAccessTokenExt;
+    property OnAccessToken: TOAuth2OnAccessToken read FOnAccessToken write FOnAccessToken;
+    property OnErrorResponse: TOAuth2OnErrorResponse read FOnErrorResponse write FOnErrorResponse;
+    property OnGetBrowserResponseBody: TOAuth2OnGetBrowserResponseBody read FOnGetBrowserResponseBody write FOnGetBrowserResponseBody;
   end;
 
-  { TTextBuffer }
+  { TOAuth2TextBuffer }
 
-  TTextBuffer = class(TMemoryStream)
+  TOAuth2TextBuffer = class(TMemoryStream)
   private
     function GetDataString: AnsiString;
   public
     property DataString: AnsiString read GetDataString;
   end;
 
-  { TURLEncodedData }
+  { TOAuth2URLEncodedData }
 
-  TURLEncodedData = class(TTextBuffer)
+  TOAuth2URLEncodedData = class(TOAuth2TextBuffer)
   public
     procedure AddParam(Name, Value: string);
     procedure AddParams(Params: TStrings);
@@ -215,6 +210,10 @@ uses IdHTTP, IdURI, IdSSL,IdSSLOpenSSL, IdLogEvent, IdGlobalProtocols,
   IdIntercept,  LCLIntf, LResources, URIParser;
 
 const
+  {Response Content Type}
+  rcAccept = 'application/vnd.hmrc.1.0+json';
+
+const
   RedirectResponse = 'window.location.href=window.location.origin+''?''+window.location.hash.substring(1);';
 
 resourcestring
@@ -224,9 +223,9 @@ resourcestring
   SOAuth2RequestIgnored = 'Authorization Code Request Ignored';
   SNoJavascriptSupport =  'Implicit Authorization Failed. Please enable Javascript.';
 
-{ TTextBuffer }
+{ TOAuth2TextBuffer }
 
-function TTextBuffer.GetDataString: AnsiString;
+function TOAuth2TextBuffer.GetDataString: AnsiString;
 begin
   SetLength(Result,Size);
   Position := 0;
@@ -259,8 +258,8 @@ begin
     else
     if assigned(OnAccessToken) then
     begin
-      if Response is TBearerTokenResponse then
-      with Response as TBearerTokenResponse do
+      if Response is TOAuth2BearerTokenResponse then
+      with Response as TOAuth2BearerTokenResponse do
         OnAccessToken(FOwner,access_token,refresh_token,scope,expires_in)
       else
       if assigned(FOnErrorResponse) then
@@ -280,7 +279,7 @@ begin
 end;
 
 constructor TOAuth2Client.TAsyncResponseHandler.Create(aOwner: TOAuth2Client;
-  ResponseClass: TTokenResponseClass);
+  ResponseClass: TOAuth2TokenResponseClass);
 begin
   inherited Create;
   FOwner := aOwner;
@@ -319,7 +318,7 @@ end;
 { TOAuth2Client.TSyncResponseHandler }
 
 constructor TOAuth2Client.TSyncResponseHandler.Create(aOwner: TOAuth2Client;
-  aResponse: TTokenResponse);
+  aResponse: TOAuth2TokenResponse);
 begin
   inherited Create;
   FOwner := aOwner;
@@ -369,9 +368,9 @@ begin
 end;
 
 
-{ TURLEncodedData }
+{ TOAuth2URLEncodedData }
 
-procedure TURLEncodedData.AddParam(Name, Value: string);
+procedure TOAuth2URLEncodedData.AddParam(Name, Value: string);
 var s: string;
 begin
   s := Name+'='+TIdURI.ParamsEncode(Value);
@@ -380,7 +379,7 @@ begin
   WriteBuffer(s[1],Length(s));
 end;
 
-procedure TURLEncodedData.AddParams(Params: TStrings);
+procedure TOAuth2URLEncodedData.AddParams(Params: TStrings);
 var i: integer;
 begin
   for i := 0 to Params.Count - 1 do
@@ -415,7 +414,7 @@ end;
 procedure TOAuth2Client.HandleCommandGet(AContext: TIdContext;
   ARequestInfo: TIdHTTPRequestInfo; AResponseInfo: TIdHTTPResponseInfo);
 
-var ResponseType: TBrowserResponseType;
+var ResponseType: TOAuth2BrowserResponseType;
 
 procedure ValidateResponse;
 begin
@@ -533,7 +532,7 @@ begin
 end;
 
 procedure TOAuth2Client.GetAccessTokenFromAuthCode(AuthCode: string;
-  Response: TTokenResponse);
+  Response: TOAuth2TokenResponse);
 var Params: TStringList;
 begin
   {RFC 6749 Access Token Request}
@@ -552,11 +551,11 @@ function TOAuth2Client.Post(URL: string; Params: TStrings;
   Response: TOAuth2Response): integer;
 var httpClient: TIdHttp;
     SSlHandler: TIdSSLIOHandlerSocketOpenSSL;
-    RequestParams: TURLEncodedData;
-    ResponseStream: TTextBuffer;
+    RequestParams: TOAuth2URLEncodedData;
+    ResponseStream: TOAuth2TextBuffer;
 begin
   SSlHandler := nil;
-  RequestParams := TURLEncodedData.Create;
+  RequestParams := TOAuth2URLEncodedData.Create;
   httpClient := TIdHTTP.Create(nil);
   try
     httpClient.HTTPOptions := httpClient.HTTPOptions + [hoNoProtocolErrorException,
@@ -592,7 +591,7 @@ begin
     end;
     httpClient.ConnectTimeout := 5000;
     httpClient.ReadTimeout := 5000;
-    ResponseStream := TTextBuffer.Create;
+    ResponseStream := TOAuth2TextBuffer.Create;
     try
       httpClient.Post(URL,RequestParams,ResponseStream);
       Result := httpClient.ResponseCode;
@@ -662,9 +661,9 @@ end;
 procedure TOAuth2Client.GrantClientCredentials(Scope: string;
   var AccessToken: string; var TokenScope: string;
   var expires_in: integer);
-var Response: TBearerTokenResponse;
+var Response: TOAuth2BearerTokenResponse;
 begin
-  Response := TBearerTokenResponse.Create;
+  Response := TOAuth2BearerTokenResponse.Create;
   try
     GrantClientCredentials(Scope,Response);
     AccessToken := Response.access_token;
@@ -676,7 +675,7 @@ begin
 end;
 
 procedure TOAuth2Client.GrantClientCredentials(Scope: string;
-  Response: TTokenResponse);
+  Response: TOAuth2TokenResponse);
 var Params: TStringList;
 begin
   {RFC 6749 Client Credentials grant}
@@ -694,9 +693,9 @@ end;
 procedure TOAuth2Client.GrantUserPasswordCredentials(Scope: string; UserName,
   Password: string; var AccessToken: string; var RefreshToken: string;
   var TokenScope: string; var expires_in: integer);
-var Response: TBearerTokenResponse;
+var Response: TOAuth2BearerTokenResponse;
 begin
-  Response := TBearerTokenResponse.Create;
+  Response := TOAuth2BearerTokenResponse.Create;
   try
     GrantUserPasswordCredentials(Scope,UserName, Password,Response);
     AccessToken := Response.access_token;
@@ -709,7 +708,7 @@ begin
 end;
 
 procedure TOAuth2Client.GrantUserPasswordCredentials(Scope: string; UserName,
-  Password: string; Response: TTokenResponse);
+  Password: string; Response: TOAuth2TokenResponse);
 var Params: TStringList;
 begin
   {RFC 6749 Resource Owner Password Credentials Grant}
@@ -728,7 +727,7 @@ end;
 
 procedure TOAuth2Client.InternalGrantAuthorizationCode(Scope: string);
 var URI: TIdURI;
-    Params: TURLEncodedData;
+    Params: TOAuth2URLEncodedData;
     guid: TGUID;
 begin
   {RFC 6749 Authorization Code Grant}
@@ -738,7 +737,7 @@ begin
   {Assume ResponseHandler already set up}
   FAuthGrantState := agWaitAuthCode;
   URI := TIdURI.Create(AuthEndPoint);
-  Params := TURLEncodedData.Create;
+  Params := TOAuth2URLEncodedData.Create;
   try
     Params.AddParam('response_type','code');
     Params.AddParam('client_id',ClientID);
@@ -762,7 +761,7 @@ end;
 
 {Asynchromous - response is processed by HTTP Server OnCommandGet}
 procedure TOAuth2Client.GrantAuthorizationCodeAsync(Scope: string;
-  ResponseClass: TTokenResponseClass);
+  ResponseClass: TOAuth2TokenResponseClass);
 begin
   CheckMainThread;
   FResponseHandler := TAsyncResponseHandler.Create(self,ResponseClass);
@@ -772,15 +771,15 @@ end;
 {Asynchromous - response is processed by HTTP Server OnCommandGet}
 procedure TOAuth2Client.GrantAuthorizationCodeAsync(Scope: string);
 begin
-  GrantAuthorizationCodeAsync(Scope,TBearerTokenResponse);
+  GrantAuthorizationCodeAsync(Scope,TOAuth2BearerTokenResponse);
 end;
 
 procedure TOAuth2Client.GrantAuthorizationCode(Scope: string; var AccessToken,
   RefreshToken: string; var TokenScope: string; var expires_in: integer;
   timeout: cardinal);
-var Response: TBearerTokenResponse;
+var Response: TOAuth2BearerTokenResponse;
 begin
-  Response := TBearerTokenResponse.Create;
+  Response := TOAuth2BearerTokenResponse.Create;
   try
     GrantAuthorizationCode(Scope, Response, timeout);
     AccessToken := Response.access_token;
@@ -793,7 +792,7 @@ begin
 end;
 
 procedure TOAuth2Client.GrantAuthorizationCode(Scope: string;
-  Response: TTokenResponse; timeout: cardinal);
+  Response: TOAuth2TokenResponse; timeout: cardinal);
 begin
   FResponseHandler := TSyncResponseHandler.Create(self,Response);
   try
@@ -810,12 +809,12 @@ end;
 
 procedure TOAuth2Client.ImplicitGrantAsync(Scope: string);
 begin
-  ImplicitGrantAsync(Scope,TBearerTokenResponse);
+  ImplicitGrantAsync(Scope,TOAuth2BearerTokenResponse);
 end;
 
 procedure TOAuth2Client.InternalImplicitGrant(Scope: string);
 var URI: TIdURI;
-    Params: TURLEncodedData;
+    Params: TOAuth2URLEncodedData;
     guid: TGUID;
 begin
   {RFC 6749 Implicit Grant}
@@ -825,7 +824,7 @@ begin
   {Assume Response Handler already setup}
   FAuthGrantState := agWaitAccessCode;
   URI := TIdURI.Create(AuthEndPoint);
-  Params := TURLEncodedData.Create;
+  Params := TOAuth2URLEncodedData.Create;
   try
     Params.AddParam('response_type','token');
     Params.AddParam('client_id',ClientID);
@@ -848,14 +847,14 @@ begin
 end;
 
 procedure TOAuth2Client.ImplicitGrantAsync(Scope: string;
-  ResponseClass: TTokenResponseClass);
+  ResponseClass: TOAuth2TokenResponseClass);
 begin
   CheckMainThread;
   FResponseHandler := TAsyncResponseHandler.Create(self,ResponseClass);
   InternalImplicitGrant(Scope);
 end;
 
-procedure TOAuth2Client.ImplicitGrant(Scope: string; Response: TTokenResponse;
+procedure TOAuth2Client.ImplicitGrant(Scope: string; Response: TOAuth2TokenResponse;
   timeout: cardinal);
 begin
   FResponseHandler := TSyncResponseHandler.Create(self,Response);
@@ -873,9 +872,9 @@ end;
 
 procedure TOAuth2Client.ImplicitGrant(Scope: string; var AccessToken: string;
   var TokenScope: string; var expires_in: integer; timeout: cardinal);
-var Response: TBearerTokenResponse;
+var Response: TOAuth2BearerTokenResponse;
 begin
-  Response := TBearerTokenResponse.Create;
+  Response := TOAuth2BearerTokenResponse.Create;
   try
     ImplicitGrant(Scope, Response, timeout);
     AccessToken := Response.access_token;
@@ -894,9 +893,9 @@ end;
 procedure TOAuth2Client.RefreshAccessToken(Scope, RefreshToken: string;
   var AccessToken: string; var TokenScope: string; var NewRefreshToken: string;
   var expires_in: integer);
-var Response: TBearerTokenResponse;
+var Response: TOAuth2BearerTokenResponse;
 begin
-  Response := TBearerTokenResponse.Create;
+  Response := TOAuth2BearerTokenResponse.Create;
   try
     RefreshAccessToken(Scope,RefreshToken,Response);
     AccessToken := Response.access_token;
@@ -909,7 +908,7 @@ begin
 end;
 
 procedure TOAuth2Client.RefreshAccessToken(Scope, RefreshToken: string;
-  Response: TTokenResponse);
+  Response: TOAuth2TokenResponse);
 var Params: TStringList;
 begin
   Params := TStringList.Create;
@@ -925,7 +924,7 @@ begin
 end;
 
 procedure TOAuth2Client.ExtensionGrant(GrantType: string; aParams: TStrings;
-  Response: TTokenResponse);
+  Response: TOAuth2TokenResponse);
 var Params: TStringList;
 begin
   Params := TStringList.Create;

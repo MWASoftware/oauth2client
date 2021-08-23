@@ -34,9 +34,9 @@ type
       procedure ProcessParams(Params: TStrings);
     end;
 
-    { TTokenResponse }
+    { TOAuth2TokenResponse }
 
-    TTokenResponse = class(TOAuth2Response)
+    TOAuth2TokenResponse = class(TOAuth2Response)
     private
       FTokenType: string;
       FTokenTypeName: string;
@@ -50,11 +50,11 @@ type
       property token_type: string read FTokenType write FTokenType;
     end;
 
-    TTokenResponseClass = class of TTokenResponse;
+    TOAuth2TokenResponseClass = class of TOAuth2TokenResponse;
 
-    { TBearerTokenResponse }
+    { TOAuth2BearerTokenResponse }
 
-    TBearerTokenResponse = class(TTokenResponse)
+    TOAuth2BearerTokenResponse = class(TOAuth2TokenResponse)
       { Example Access Token - JSON encoded
             "access_token":"2YotnFZFEjr1zCsicMWpAA",
             "token_type":"example",
@@ -140,27 +140,27 @@ begin
   ValidateResponse;
 end;
 
-{ TTokenResponse }
+{ TOAuth2TokenResponse }
 
-procedure TTokenResponse.ValidateResponse;
+procedure TOAuth2TokenResponse.ValidateResponse;
 begin
   if CompareText(token_type,TokenTypeName) <> 0 then
     OAuth2Error(erBadAccessTokenType,[TokenTypeName,token_type]);
 end;
 
-procedure TTokenResponse.SetTokenTypeName(aTokenTypeName: string);
+procedure TOAuth2TokenResponse.SetTokenTypeName(aTokenTypeName: string);
 begin
   FTokenTypeName := aTokenTypeName;
 end;
 
-constructor TTokenResponse.Create;
+constructor TOAuth2TokenResponse.Create;
 begin
   inherited Create;
 end;
 
-{ TBearerTokenResponse }
+{ TOAuth2BearerTokenResponse }
 
-procedure TBearerTokenResponse.ValidateResponse;
+procedure TOAuth2BearerTokenResponse.ValidateResponse;
 begin
   inherited;
   if access_token = '' then
@@ -168,7 +168,7 @@ begin
 end;
 
 
-constructor TBearerTokenResponse.Create;
+constructor TOAuth2BearerTokenResponse.Create;
 begin
   inherited Create;
   SetTokenTypeName(BearerToken);

@@ -147,12 +147,12 @@ begin
 end;
 
 procedure OAuth2ConsoleTest.TestExtensionGrant(Scope: string);
-var Response: TBearerTokenResponse;
+var Response: TOAuth2BearerTokenResponse;
     LocalParams: TStringList;
 begin
   {Test emulates a Client credentials Grant using an ExtensionGrant}
   LocalParams := TStringList.Create;
-  Response := TBearerTokenResponse.Create;
+  Response := TOAuth2BearerTokenResponse.Create;
   try
     LocalParams.Values['scope'] := Scope;
     try
