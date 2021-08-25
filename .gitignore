@@ -1,5 +1,5 @@
 # oauth2client project specific
-lib/
+bin/
 
 # Compiled l10n files: .mo should be ignored
 *.mo
