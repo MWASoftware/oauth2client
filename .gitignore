@@ -1,5 +1,12 @@
+# Ignore Linux Binaries
+*
+!/**/
+!*.*
+
 # oauth2client project specific
 lib/
+.svn/
+*.ico
 
 # Compiled l10n files: .mo should be ignored
 *.mo
