@@ -585,7 +585,6 @@ begin
     if ParseURI(URL).Protocol = 'https' then
     begin
       SSlHandler := TIdSSLIOHandlerSocketOpenSSL.Create(httpClient);
-      SSlHandler.SSLOptions.Method := sslvTLSv1_2;
       SSlHandler.SSLOptions.Mode:= sslmClient;
       httpClient.IOHandler := SSlHandler;
     end;

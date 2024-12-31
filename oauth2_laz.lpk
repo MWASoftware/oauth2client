@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <Name Value="oauth2_laz"/>
     <Type Value="RunAndDesignTime"/>
     <Author Value="Tony Whyman"/>
@@ -28,7 +28,7 @@
     along with the MWA Software OAuth2 Client.  If not, see https://www.gnu.org/licenses/.
 
 "/>
-    <Version Major="1" Minor="0" Release = "0" Build="12779" />
+    <Version Major="1" Build="9999"/>
     <Files Count="3">
       <Item1>
         <Filename Value="src/oauth2Client.pas"/>
@@ -44,14 +44,18 @@
         <UnitName Value="oauth2tokens"/>
       </Item3>
     </Files>
+    <CompatibilityMode Value="True"/>
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="languages"/>
     </i18n>
-    <RequiredPkgs Count="1">
+    <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="indylaz"/>
+        <PackageName Value="LCLBase"/>
       </Item1>
+      <Item2>
+        <PackageName Value="indyopenssl"/>
+      </Item2>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

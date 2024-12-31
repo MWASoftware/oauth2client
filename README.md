@@ -23,3 +23,6 @@ The package uses the Indy Component library for both an http/https client and an
 Multithreading support is required for Authorization Code and Implicit Grants.
 
 The package is written in Object Pascal and is made available under the Lesser GPL.
+
+The package requires the Indy package for http/https protocol support. It has been configured for
+use with the MWA Software Indy.ProposedUpdate fork of IndySockets.
