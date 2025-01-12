@@ -26,3 +26,7 @@ The package is written in Object Pascal and is made available under the Lesser G
 
 The package requires the Indy package for http/https protocol support. It has been configured for
 use with the MWA Software Indy.ProposedUpdate fork of IndySockets.
+
+The package can atill be used with the 10.6 version of Indy. However, you will be limited to using the unsupported OpenSSL 1.0.2 library (current is OpenSSL 3.x) and TLS 1.2.
+
+In order to use the package with Indy 10.6, you must compile with the "USING_INDY10_6" defined symbol and change the oauth2_laz package dependency from indyopenssl to indylaz.

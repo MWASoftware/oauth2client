@@ -31,6 +31,7 @@ unit oauth2Client;
 }
 
 {$mode ObjFPC}{$H+}
+{ $DEFINE USING_INDY10_6} {Enable this if using the legacy version of Indy with OpenSSL 1.0.2 or earler}
 
 interface
 
@@ -585,6 +586,9 @@ begin
     if ParseURI(URL).Protocol = 'https' then
     begin
       SSlHandler := TIdSSLIOHandlerSocketOpenSSL.Create(httpClient);
+      {$IFDEF USING_INDY10_6}
+      SSlHandler.SSLOptions.Method := sslvTLSv1_2;
+      {$ENDIF}
       SSlHandler.SSLOptions.Mode:= sslmClient;
       httpClient.IOHandler := SSlHandler;
     end;
