@@ -51,10 +51,10 @@
     </i18n>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="LCLBase"/>
+        <PackageName Value="indylaz"/>
       </Item1>
       <Item2>
-        <PackageName Value="indy_laz"/>
+        <PackageName Value="LCLBase"/>
       </Item2>
     </RequiredPkgs>
     <UsageOptions>
