@@ -208,7 +208,7 @@ procedure Register;
 implementation
 
 uses IdHTTP, IdURI, IdSSL,IdSSLOpenSSL, IdLogEvent, IdGlobalProtocols,
-  IdIntercept,  LCLIntf, LResources, URIParser;
+  IdIntercept,  LCLIntf, LResources, URIParser{$IFNDEF USING_INDY10_6}, IdSSLOpenSSLOptions{$ENDIF};
 
 const
   {Response Content Type}
