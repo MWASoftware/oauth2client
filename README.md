@@ -1,6 +1,6 @@
 # oauth2client
 
-An RFC 6749 OAuth2 Client implemented as a Lazarus Package.
+An RFC 6749 OAuth2 Client implemented as a Lazarus Package. It has been configured for use with Indy 10.6 and is therefore limited to using the unsupported OpenSSL 1.0.2 library (current is OpenSSL 3.x) and TLS 1.2. For use with OpenSSL 3 libraries and TLS 1.3, you will need to use the main branch of this repository and use it with the Indy.ProposedUpdate fork also available from MWASoftware's github site.
 
 The client is intended to be fully featured and supports the following grant types:
 
@@ -27,15 +27,11 @@ The package is written in Object Pascal and is made available under the Lesser G
 The package requires the Indy package for http/https protocol support. It has been configured for
 use with the MWA Software Indy.ProposedUpdate fork of IndySockets.
 
-The package can still be used with the 10.6 version of Indy. However, you will be limited to using the unsupported OpenSSL 1.0.2 library (current is OpenSSL 3.x) and TLS 1.2.
-
-In order to use the package with Indy 10.6, you must compile with the "USING_INDY10_6" defined symbol and change the oauth2_laz package dependency from indyopenssl to indylaz.
 
 Note: you do not have to install Indy into your IDE in order to use Indy units with oauth2. It is sufficient to open, in the IDE, the packages
 
 indysystem,
 indycore,
-indyprotocols,
-indyopenssl
+indyprotocols
 
 in the above order. Lazarus then knows where to find them when compiling with oauth2_laz.

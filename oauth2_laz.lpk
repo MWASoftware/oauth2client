@@ -54,7 +54,7 @@
         <PackageName Value="LCLBase"/>
       </Item1>
       <Item2>
-        <PackageName Value="indyopenssl"/>
+        <PackageName Value="indy_laz"/>
       </Item2>
     </RequiredPkgs>
     <UsageOptions>
