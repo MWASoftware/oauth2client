@@ -31,7 +31,6 @@ unit oauth2Client;
 }
 
 {$mode ObjFPC}{$H+}
-{ $DEFINE USING_INDY10_6} {Enable this if using the legacy version of Indy with OpenSSL 1.0.2 or earler}
 
 interface
 
@@ -207,8 +206,8 @@ procedure Register;
 
 implementation
 
-uses IdHTTP, IdURI, IdSSL,IdSSLOpenSSL, IdLogEvent, IdGlobalProtocols,
-  IdIntercept,  LCLIntf, LResources, URIParser{$IFNDEF USING_INDY10_6}, IdSSLOpenSSLOptions{$ENDIF};
+uses IdHTTP, IdURI, IdSSL,IdSecOpenSSL, IdLogEvent, IdGlobalProtocols,
+  IdIntercept,  LCLIntf, LResources, URIParser, IdSecOpenSSLOptions;
 
 const
   {Response Content Type}
@@ -551,7 +550,7 @@ end;
 function TOAuth2Client.Post(URL: string; Params: TStrings;
   Response: TOAuth2Response): integer;
 var httpClient: TIdHttp;
-    SSlHandler: TIdSSLIOHandlerSocketOpenSSL;
+    SSlHandler: TIdSecIOHandlerSocketOpenSSL;
     RequestParams: TOAuth2URLEncodedData;
     ResponseStream: TOAuth2TextBuffer;
 begin
@@ -585,10 +584,7 @@ begin
     httpClient.Request.ContentType := 'application/x-www-form-urlencoded';
     if ParseURI(URL).Protocol = 'https' then
     begin
-      SSlHandler := TIdSSLIOHandlerSocketOpenSSL.Create(httpClient);
-      {$IFDEF USING_INDY10_6}
-      SSlHandler.SSLOptions.Method := sslvTLSv1_2;
-      {$ENDIF}
+      SSlHandler := TIdSecIOHandlerSocketOpenSSL.Create(httpClient);
       SSlHandler.SSLOptions.Mode:= sslmClient;
       httpClient.IOHandler := SSlHandler;
     end;

@@ -51,10 +51,10 @@
     </i18n>
     <RequiredPkgs Count="2">
       <Item1>
-        <PackageName Value="LCLBase"/>
+        <PackageName Value="IndySecOpenSSL"/>
       </Item1>
       <Item2>
-        <PackageName Value="indyopenssl"/>
+        <PackageName Value="LCLBase"/>
       </Item2>
     </RequiredPkgs>
     <UsageOptions>
