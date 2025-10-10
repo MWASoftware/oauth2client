@@ -28,7 +28,7 @@
     along with the MWA Software OAuth2 Client.  If not, see https://www.gnu.org/licenses/.
 
 "/>
-    <Version Major="1" Build="9999"/>
+    <Version Major="1" Minor="0" Release = "1" Build="26" />
     <Files Count="3">
       <Item1>
         <Filename Value="src/oauth2Client.pas"/>
