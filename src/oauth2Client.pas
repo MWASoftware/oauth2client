@@ -36,6 +36,13 @@ interface
 
 uses Classes, Sysutils, IdHTTPServer, IdGlobal, IdContext,IdHeaderList,
   IdCustomHTTPServer, SyncObjs, oauth2tokens, oauth2errors;
+  
+ {version info}
+ const
+   oauth2_Major = 0;
+   oauth2_Minor = 0;
+   oauth2_Release = 0;
+   oauth2_Version = '0.0.0';
 
 
 type

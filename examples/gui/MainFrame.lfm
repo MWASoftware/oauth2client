@@ -9,7 +9,7 @@ object Form1: TForm1
   DefaultMonitor = dmPrimary
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '2.2.0.2'
+  LCLVersion = '3.7.0.0'
   object Memo1: TMemo
     Left = 16
     Height = 338
@@ -28,8 +28,8 @@ object Form1: TForm1
     Top = 352
     Width = 160
     Caption = 'Get Client Credentials'
-    OnClick = Button1Click
     TabOrder = 1
+    OnClick = Button1Click
   end
   object Button2: TButton
     Left = 184
@@ -37,8 +37,8 @@ object Form1: TForm1
     Top = 352
     Width = 168
     Caption = 'Get Authorization'
-    OnClick = Button2Click
     TabOrder = 2
+    OnClick = Button2Click
   end
   object RefreshBtn: TButton
     Left = 368
@@ -47,8 +47,8 @@ object Form1: TForm1
     Width = 144
     Caption = 'Refresh Access Token'
     Enabled = False
-    OnClick = RefreshBtnClick
     TabOrder = 3
+    OnClick = RefreshBtnClick
   end
   object RadioGroup1: TRadioGroup
     Left = 696
@@ -64,7 +64,7 @@ object Form1: TForm1
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 34
+    ClientHeight = 32
     ClientWidth = 139
     ItemIndex = 1
     Items.Strings = (
@@ -80,8 +80,8 @@ object Form1: TForm1
     Top = 352
     Width = 168
     Caption = 'User Password Grant'
-    OnClick = Button3Click
     TabOrder = 5
+    OnClick = Button3Click
   end
   object ScopeSelection: TRadioGroup
     Left = 699
@@ -97,7 +97,7 @@ object Form1: TForm1
     ChildSizing.ShrinkVertical = crsScaleChilds
     ChildSizing.Layout = cclLeftToRightThenTopToBottom
     ChildSizing.ControlsPerLine = 1
-    ClientHeight = 45
+    ClientHeight = 43
     ClientWidth = 139
     ItemIndex = 0
     Items.Strings = (
@@ -112,8 +112,8 @@ object Form1: TForm1
     Top = 352
     Width = 125
     Caption = 'Implicit Grant'
-    OnClick = Button4Click
     TabOrder = 7
+    OnClick = Button4Click
   end
   object CancelBtn: TButton
     Left = 320
@@ -122,8 +122,8 @@ object Form1: TForm1
     Width = 75
     Caption = 'Cancel'
     Enabled = False
-    OnClick = CancelBtnClick
     TabOrder = 8
+    OnClick = CancelBtnClick
   end
   object ResourceBtn: TButton
     Left = 699
@@ -131,8 +131,8 @@ object Form1: TForm1
     Top = 384
     Width = 123
     Caption = 'Access Resource'
-    OnClick = ResourceBtnClick
     TabOrder = 9
+    OnClick = ResourceBtnClick
   end
   object OAuth2Client: TOAuth2Client
     ClientID = 'OAuth2Tester'
@@ -148,6 +148,7 @@ object Form1: TForm1
     Top = 272
   end
   object httpClient: TIdHTTP
+    IOHandler = SSLHandler
     ProxyParams.BasicAuthentication = False
     ProxyParams.ProxyPort = 0
     Request.ContentLength = -1
@@ -164,16 +165,15 @@ object Form1: TForm1
     Left = 192
     Top = 272
   end
-  object SSLHandler: TIdSSLIOHandlerSocketOpenSSL
+  object SSLHandler: TIdSecIOHandlerSocketOpenSSL
     MaxLineAction = maException
     Port = 0
     DefaultPort = 0
-    SSLOptions.Method = sslvTLSv1_2
-    SSLOptions.SSLVersions = [sslvTLSv1_2]
+    SSLOptions.Method = sslvTLSv1_3
     SSLOptions.Mode = sslmClient
     SSLOptions.VerifyMode = []
     SSLOptions.VerifyDepth = 0
-    Left = 288
-    Top = 272
+    Left = 429
+    Top = 262
   end
 end

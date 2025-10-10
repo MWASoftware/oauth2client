@@ -25,6 +25,8 @@ CREATE TABLE oauth_authorization_codes (
   expires             TIMESTAMP       NOT NULL,
   scope               VARCHAR(4000),
   id_token            VARCHAR(1000),
+  code_challenge      VARCHAR(1000),
+  code_challenge_method VARCHAR(1000),
   PRIMARY KEY (authorization_code)
 );
 

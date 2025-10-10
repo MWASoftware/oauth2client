@@ -26,13 +26,19 @@
     <RunParams>
       <FormatVersion Value="2"/>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="4">
       <Item1>
-        <PackageName Value="oauth2_laz"/>
+        <PackageName Value="IndySecOpenSSL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="indylaz_openssl"/>
       </Item2>
+      <Item3>
+        <PackageName Value="oauth2_laz"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="LCL"/>
+      </Item4>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>

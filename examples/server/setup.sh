@@ -6,9 +6,10 @@ DB=oauth2_db
 cd `dirname $0`
 
 if [ ! -d "oauth2-server-php" ]; then
-  git clone https://github.com/bshaffer/oauth2-server-php.git -b master
+  git clone https://github.com/bshaffer/oauth2-server-php.git
 fi
 
+echo "You will now be promoted for the MySQL root password"
 (
 echo "DROP DATABASE IF EXISTS $DB;"
 echo "CREATE DATABASE $DB CHARACTER SET utf8;"
@@ -33,6 +34,7 @@ DIR=`realpath .`
 echo "Alias \"/oauth2/\"  \"$DIR/endpoints/\""
 echo "<Directory \"$DIR\">"
 echo "php_value engine on"
+echo "Require all granted"
 echo "allow from all"
 echo "</Directory>"
 ) > "apache2.conf"

@@ -22,7 +22,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, StdCtrls, ExtCtrls,
-  Interfaces, oauth2Client, IdHTTP, IdSSLOpenSSL;
+  Interfaces, oauth2Client, IdSecOpenSSL, IdHTTP;
 
 const
   {User for Resource Owner Password Grant}
@@ -39,7 +39,7 @@ type
     Button3: TButton;
     Button4: TButton;
     httpClient: TIdHTTP;
-    SSLHandler: TIdSSLIOHandlerSocketOpenSSL;
+    SSLHandler: TIdSecIOHandlerSocketOpenSSL;
     ResourceBtn: TButton;
     CancelBtn: TButton;
     OAuth2Client: TOAuth2Client;
