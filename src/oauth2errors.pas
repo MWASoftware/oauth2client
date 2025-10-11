@@ -195,7 +195,11 @@ end;
 constructor EOAuth2Exception.TErrorInfo.Create(responseStr: string);
 begin
   inherited Create;
-  ParseJsonResponse(responseStr);
+  try
+    ParseJsonResponse(responseStr);
+  except On E: Exception do
+    FError := responseStr;
+  end;
 end;
 
 constructor EOAuth2Exception.TErrorInfo.Create(Params: TStrings);
