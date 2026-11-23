@@ -21,12 +21,15 @@ unit oauth2tokens;
 
 interface
 
-uses Classes, Sysutils, fpjson;
+uses Classes, Sysutils, fpjson, TypInfo;
 
 type
       { TOAuth2Response }
 
     TOAuth2Response = class(TPersistent)
+    private
+      procedure HandlePropException(Sender : TObject; AObject : TObject; Info : PPropInfo;
+         AValue : TJSONData; Error : Exception; Var Continue : Boolean);
     protected
       procedure ValidateResponse; virtual; abstract;
     public
@@ -82,15 +85,40 @@ type
 
 implementation
 
-uses fpjsonrtti, RttiUtils, TypInfo, oauth2errors;
+uses fpjsonrtti, RttiUtils, oauth2errors;
 
 { TOAuth2Response }
+
+procedure TOAuth2Response.HandlePropException(Sender: TObject;
+  AObject: TObject; Info: PPropInfo; AValue: TJSONData; Error: Exception;
+  var Continue: Boolean);
+var TI : PTypeInfo;
+begin
+  TI:=Info^.PropType;
+  Continue := true;
+  if AValue is TJSONNull then
+  case TI^.Kind of
+  tkInteger:
+    SetOrdProp(AObject,Info,0);
+  tkInt64:
+    SetOrdProp(AObject,Info,0);
+  tkFloat:
+    SetFloatProp(AObject,Info,0);
+  tkSString,
+  tkLString,
+  tkAString:
+    SetStrProp(AObject,Info,'');
+  else
+    Continue := false;
+  end;
+end;
 
 procedure TOAuth2Response.ParseJsonResponse(response: TJSONStringType);
 var DeStreamer: TJSONDeStreamer;
 begin
   DeStreamer := TJSONDeStreamer.Create(nil);
   try
+    DeStreamer.OnPropertyError:= @HandlePropException;
     DeStreamer.JSONToObject(response,self);
   finally
     DeStreamer.Free;

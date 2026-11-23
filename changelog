@@ -1,3 +1,8 @@
+OAUTH2 Change Log version (1.1-1 ) Tue, 31 Dec 2024 14:50 +0000
+
+1. Avoid raising an exception when server returns a JSON null value (e.g. scope: null). A null value is now
+   interpreted as an empty string or a 0 depending on the property type.
+
 OAUTH2 Change Log version (1.1-0 ) Tue, 31 Dec 2024 14:50 +0000
 
 1. Update to use MWA Software's Indy.ProprosedUpdate package
